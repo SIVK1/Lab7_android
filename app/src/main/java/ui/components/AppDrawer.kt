@@ -16,14 +16,13 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.topic2.android.notes.theme.NotesTheme
 import com.topic2.android.notes.routing.NotesRouter
 import com.topic2.android.notes.routing.Screen
+import com.topic2.android.notes.theme.NotesTheme
 import com.topic2.android.notes.theme.NotesThemeSettings
 
 
 @Composable
-@Preview
 private fun AppDrawerHeader(){
     Row(modifier = Modifier.fillMaxWidth()){
         Image(
@@ -33,11 +32,12 @@ private fun AppDrawerHeader(){
                 .tint(MaterialTheme.colors.onSurface),
             modifier = Modifier.padding(16.dp)
         )
-        Text(text = "Заметки",
+        Text(
+            text = "Заметки",
             modifier = Modifier
-                .align(alignment = Alignment.CenterVertically))
+                .align(alignment = Alignment.CenterVertically)
+        )
     }
-
 }
 
 @Preview
@@ -54,31 +54,32 @@ private fun ScreenNavigationButton(
     label: String,
     isSelected: Boolean,
     onClick: () -> Unit
-) {
+){
     val colors = MaterialTheme.colors
-    val imageAlpha = if (isSelected){
+
+    val imageAlpha = if(isSelected) {
         1f
     } else{
         0.6f
     }
-    val textColor = if (isSelected){
+
+    val textColor = if(isSelected){
         colors.primary
-    } else{
+    }else{
         colors.onSurface.copy(alpha = 0.6f)
     }
 
     val backgroundColor = if (isSelected){
         colors.primary.copy(alpha = 0.12f)
-    } else{
+    }else{
         colors.surface
     }
-    Surface(
+
+    Surface (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp, top = 8.dp),
-        color = backgroundColor,
-        shape = MaterialTheme.shapes.small
-    ) {
+            .padding(start = 8.dp, end = 8.dp, top = 8.dp)
+    ){
         Row(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
@@ -86,9 +87,9 @@ private fun ScreenNavigationButton(
                 .clickable(onClick = onClick)
                 .fillMaxWidth()
                 .padding(4.dp)
-        ) {
-            Image(
-                imageVector = icon ,
+        ){
+            Image (
+                imageVector = icon,
                 contentDescription = "Screen Navigation Button",
                 colorFilter = ColorFilter.tint(textColor),
                 alpha = imageAlpha
@@ -118,12 +119,13 @@ fun ScreenNavigationButtonPreview() {
 }
 
 @Composable
-private fun LightDarkThemeItem(){
+private fun LightDarkThemeItem() {
     Row(
         Modifier
             .padding(8.dp)
     ){
-        Text(text = "Включить темную тему",
+        Text(
+            text = "Включить темную тему",
             style = MaterialTheme.typography.body2,
             color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
             modifier = Modifier
@@ -132,17 +134,20 @@ private fun LightDarkThemeItem(){
                 .align(alignment = Alignment.CenterVertically)
         )
         Switch(checked = NotesThemeSettings.isDarkThemeEnabled,
-            onCheckedChange = {NotesThemeSettings.isDarkThemeEnabled = it},
+            onCheckedChange = { NotesThemeSettings.isDarkThemeEnabled = it },
             modifier = Modifier
                 .padding(start = 8.dp, end = 8.dp)
                 .align(alignment = Alignment.CenterVertically)
+
         )
     }
 }
+
 @Preview
 @Composable
-fun LightDarkThemeItemPreview() {
-    NotesTheme {
+fun LightDarkThemeItemPreview()
+{
+    NotesTheme{
         LightDarkThemeItem()
     }
 }
@@ -151,8 +156,7 @@ fun LightDarkThemeItemPreview() {
 fun AppDrawer(
     currentScreen: Screen,
     closeDrawerAction: () -> Unit
-
-){
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         AppDrawerHeader()
 
@@ -160,7 +164,7 @@ fun AppDrawer(
 
         ScreenNavigationButton(
             icon = Icons.Filled.Home,
-            label ="Заметки" ,
+            label = "Заметки",
             isSelected = currentScreen == Screen.Notes,
             onClick = {
                 NotesRouter.navigateTo(Screen.Notes)
@@ -168,7 +172,7 @@ fun AppDrawer(
             }
         )
         ScreenNavigationButton(
-            icon = Icons.Filled.Delete ,
+            icon = Icons.Filled.Delete,
             label = "Корзина",
             isSelected = currentScreen == Screen.Trash,
             onClick = {
@@ -177,7 +181,6 @@ fun AppDrawer(
             }
         )
         LightDarkThemeItem()
-
     }
 }
 @Preview
